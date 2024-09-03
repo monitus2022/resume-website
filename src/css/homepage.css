@@ -39,7 +39,7 @@ body {
 
 .iconBoxesGrid {
     width: 100%;
-    max-width: 600px;
+    max-width: 500px;
     max-height: 800px;
     justify-content: center;
     align-items: center;
