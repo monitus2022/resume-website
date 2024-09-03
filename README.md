@@ -1,3 +1,8 @@
+# Guide to deploy to gh page directly
+https://github.com/gitname/react-gh-pages
+
+Create a `public/CNAME` file with the domain name you want to use.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
