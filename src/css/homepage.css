@@ -48,11 +48,14 @@ body {
 }
 
 .footer {
+    max-width: 600px;
+    width: 100%;
     position: fixed;
     bottom: 0;
     color: rgb(63, 63, 63);
     justify-content: center;
     text-align: center;
-    padding: 10px;
+    align-items: center;
     font-family:'Verdana';
+    margin: auto;
 }

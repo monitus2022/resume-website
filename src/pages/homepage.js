@@ -62,7 +62,7 @@ const IconBoxes = () => {
 const Footer = () => {
   return (
     <Box className="footer">
-      <div>Icons are property of SQUARE-ENIX Ltd</div>
+      <div>Icons are properties of SQUARE-ENIX Ltd</div>
     </Box>
   );
 };
