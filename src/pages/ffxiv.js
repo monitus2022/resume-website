@@ -1,40 +1,64 @@
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from "react";
+import "../css/ffxiv.css";
+import combinations from "../storage/ffxiv_combinations";
+
 
 const Ffxiv = () => {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [currentCombinationIndex, setCurrentCombinationIndex] = useState(0);
+  const [usedCombinationIndex, setUsedCombinationIndex] = useState([]);
+  const [isAllCombinationsUsed, setIsAllCombinationsUsed] = useState(false);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('https://catfact.ninja/fact'); // Replace with your API endpoint
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const result = await response.json();
-                setData(result);
-            } catch (error) {
-                setError(error.message);
-            } finally {
-                setLoading(false);
-            }
-        };
+  // When all combination exhausted
+  useEffect(() => {
+    if (usedCombinationIndex.length === combinations.length) {
+      setIsAllCombinationsUsed(true);
+    }
+  }, [usedCombinationIndex]);
 
-        fetchData();
-    }, []); // Empty dependency array means this effect runs once on mount
+  // Get Next Index, if not used
+  const getNextIndex = () => {
+    let nextIndex;
+    do {
+      nextIndex = Math.floor(Math.random() * combinations.length);
+    } while (usedCombinationIndex.includes(nextIndex));
+    return nextIndex;
+  };
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+  // When on click, set used combination ???
+  const handleButtonClick = () => {
+    const nextIndex = getNextIndex();
+    setUsedCombinationIndex([...usedCombinationIndex, nextIndex]);
+    setCurrentCombinationIndex(nextIndex);
+  };
 
+  const handleSkip = () => {
+    const nextIndex = getNextIndex();
+    setUsedCombinationIndex([...usedCombinationIndex, nextIndex]);
+    setCurrentCombinationIndex(nextIndex);
+  };
+
+  // If all combinations used, give button refresh to start again
+  if (isAllCombinationsUsed) {
     return (
-        <div>
-            <h1 style={{color: "white"}}>FFXIV</h1>
-            <a href="https://docs.universalis.app/">https://docs.universalis.app/</a>
+        <div>All Combinations Used</div>
+    );
+  }
 
-            <pre style={{color: "white"}}>{JSON.stringify(data.fact, null, 2)}</pre>
-        </div>
-    )
-}
+  const { dream, consequence } = combinations[currentCombinationIndex];
+
+  return (
+    <div className="game-container">
+      <h1>Press the Button or Not?</h1>
+      <p>
+        <strong>Dream:</strong> {dream}
+      </p>
+      <p>
+        <strong>Consequence:</strong> {consequence}
+      </p>
+      <button onClick={handleButtonClick}>Press the Button</button>
+      <button onClick={handleSkip}>Skip</button>
+    </div>
+  );
+};
 
 export default Ffxiv;
